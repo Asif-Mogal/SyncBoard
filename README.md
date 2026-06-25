@@ -103,10 +103,3 @@ The backend utilizes an automatic **Embedded Redis Server** that spins up on por
    npm run dev
    ```
 4. Open **http://localhost:5173** in your web browser.
-
----
-
-## Production Deployment
-
-SyncBoard is ready to be deployed to cloud hosting environments (such as Render, Railway, AWS, or Docker).
-For full step-by-step instructions on setting up databases, environment variables, Docker configurations, and Nginx reverse proxy configurations, refer to the [**Deployment Guide**](deployment_guide.md).
