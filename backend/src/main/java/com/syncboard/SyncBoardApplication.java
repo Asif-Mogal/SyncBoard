@@ -15,6 +15,9 @@ public class SyncBoardApplication implements CommandLineRunner {
     private String datasourceUrl;
 
     public static void main(String[] args) {
+        // Print diagnostics before starting Spring Boot
+        System.out.println("DIAGNOSTIC - Env SPRING_DATASOURCE_URL: " + maskUrl(System.getenv("SPRING_DATASOURCE_URL")));
+        System.out.println("DIAGNOSTIC - Env SPRING_DATA_REDIS_HOST: " + maskUrl(System.getenv("SPRING_DATA_REDIS_HOST")));
         SpringApplication.run(SyncBoardApplication.class, args);
     }
 
@@ -24,9 +27,10 @@ public class SyncBoardApplication implements CommandLineRunner {
         log.info("DIAGNOSTIC: System Env SPRING_DATASOURCE_URL = {}", maskUrl(System.getenv("SPRING_DATASOURCE_URL")));
     }
 
-    private String maskUrl(String url) {
+    private static String maskUrl(String url) {
         if (url == null) return "null";
         return url.replaceAll(":[^:@/]+@", ":****@");
     }
 }
+
 
