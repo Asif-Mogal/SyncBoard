@@ -21,15 +21,17 @@ export const useWebSockets = (
     if (!roomId || !username) return;
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080';
-    const socketUrl = `${backendUrl}/ws-connect`;
+    const wsProtocol = backendUrl.startsWith('https') ? 'wss' : 'ws';
+    const wsUrl = `${wsProtocol}://${backendUrl.replace(/^https?:\/\//, '')}/ws-connect/websocket`;
+
     const client = new Client({
-      webSocketFactory: () => new SockJS(socketUrl),
+      brokerURL: wsUrl,
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
         setIsConnected(true);
-        console.log('Connected to WebSocket server');
+        console.log('Connected to WebSocket server natively');
 
         // 1. Subscribe to drawing strokes
         client.subscribe(`/topic/room/${roomId}`, (message) => {
@@ -116,7 +118,7 @@ export const useWebSockets = (
     if (!stompClientRef.current || !stompClientRef.current.connected) return;
 
     const now = Date.now();
-    const throttleLimit = 35; // 35ms interval corresponds to ~30 FPS
+    const throttleLimit = 65; // 65ms interval corresponds to ~15 FPS
 
     const dispatchCursor = (cx, cy) => {
       if (stompClientRef.current && stompClientRef.current.connected) {

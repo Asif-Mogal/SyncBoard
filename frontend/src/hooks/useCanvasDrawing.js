@@ -158,6 +158,11 @@ export const useCanvasDrawing = (canvasRef, onDrawAction, username) => {
     const prevY = startPointRef.current.y;
 
     if (tool === 'pen' || tool === 'eraser') {
+      // Optimize: Only draw and send if moved by at least 2.5 logical pixels (saves up to 75% of packets)
+      const dx = x - prevX;
+      const dy = y - prevY;
+      if (dx * dx + dy * dy < 6.25) return null;
+
       const drawColor = tool === 'eraser' ? 'eraser' : color;
       
       if (tool === 'eraser') {
