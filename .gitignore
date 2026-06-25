@@ -1,0 +1,27 @@
+# Maven target build directories
+**/target/
+backend/target/
+
+# Node package modules and Vite build output
+**/node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# IDE configurations
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+backend/log/
